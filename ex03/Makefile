@@ -1,7 +1,7 @@
 NAME			=	prog
 DIR_SRC			=	./
 DIR_BUILD		=	./build
-SOURCES			=	AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp main.cpp 
+SOURCES			=	AMateria.cpp Character.cpp Cure.cpp Ice.cpp main.cpp MateriaSource.cpp 
 SOURCES_NAME	=	$(basename $(SOURCES))
 OBJECTS			=	$(addsuffix .o, $(addprefix $(DIR_BUILD)/, $(SOURCES_NAME)))
 CFLAGS			=	-Wall -Wextra -Werror -std=c++98 -pedantic -g

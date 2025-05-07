@@ -8,19 +8,45 @@ void MateriaSource::initMaterias()
 		this->floor[i] = 0;
 }
 
-AMateria* MateriaSource::addMateriaOnFloor(const AMateria * src)
+AMateria* MateriaSource::addMateriaOnFloor(AMateria* src)
 {
+
+	if (this->isMateriaOnFloor(src))
+		return src;
+
 	for (int i = 0; i < 100; i++)
 	{
 		if (!this->floor[i])
 		{
-			this->floor[i] = src->clone();
-			this->floor[i]->leaveOnFloor();
+			this->floor[i] = src;
+			this->floor[i]->setOwner(0);
 			return this->floor[i];
 		}
 	}
-	std::cout << "Cannot add more materia" << std::endl;
+	std::cout << "Cannot add more materia on the floor" << std::endl;
 	return 0;
+}
+
+void MateriaSource::removeMateriaFromFloor(const AMateria* src)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		if (this->floor[i] && this->floor[i] == src)
+		{
+			this->floor[i] = 0;
+			return ;
+		}
+	}
+}
+
+bool MateriaSource::isMateriaOnFloor(const AMateria* src)
+{
+	for (int i = 0; i < 100; i++)
+	{
+		if (this->floor[i] == src)
+			return true;
+	}
+	return false;
 }
 
 MateriaSource::~MateriaSource()
@@ -78,6 +104,7 @@ void MateriaSource::learnMateria(AMateria* materia)
 		if (!this->inventory[i])
 		{
 			this->inventory[i] = materia;
+			this->inventory[i]->setSource(this);
 			return ;
 		}
 	}
@@ -88,6 +115,6 @@ AMateria* MateriaSource::createMateria(std::string const& type)
 {
 	for (int i = 0; i < 4; i++)
 		if (this->inventory[i] && this->inventory[i]->getType() == type)
-			return this->addMateriaOnFloor(this->inventory[i]);
+			return this->addMateriaOnFloor(this->inventory[i]->clone());
 	return 0;
 }

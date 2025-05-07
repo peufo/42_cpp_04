@@ -1,7 +1,7 @@
 NAME			=	prog
 DIR_SRC			=	./
 DIR_BUILD		=	./build
-SOURCES			=	Animal.cpp Brain.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp main.cpp 
+SOURCES			=	Animal.cpp Brain.cpp Cat.cpp Dog.cpp main.cpp WrongAnimal.cpp WrongCat.cpp 
 SOURCES_NAME	=	$(basename $(SOURCES))
 OBJECTS			=	$(addsuffix .o, $(addprefix $(DIR_BUILD)/, $(SOURCES_NAME)))
 CFLAGS			=	-Wall -Wextra -Werror -std=c++98 -pedantic -g

@@ -18,7 +18,7 @@ fi
 watch() {
 	STATE_A=""
 	PROG_PID=""
-	PROG_NAME="./$(cat Makefile | grep "^NAME\t" | cut -d'=' -f2 | xargs)"
+	PROG_NAME="./$(cat Makefile | grep "^NAME	" | cut -d'=' -f2 | xargs)"
 
 	while [[ true ]]
 	do

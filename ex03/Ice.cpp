@@ -19,8 +19,6 @@ Ice& Ice::operator=(const Ice& src)
 {
 	if(this == &src)
 		return *this;
-	// TODO: It is Stupid ?
-	this->type = src.type;
 	std::cout << "Ice assignement constructor" << std::endl;
 	return *this;
 }

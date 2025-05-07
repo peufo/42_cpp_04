@@ -4,13 +4,16 @@
 #include <string>
 #include <iostream>
 #include "ICharacter.hpp"
+#include "MateriaSource.hpp"
 
 class ICharacter;
+class MateriaSource;
 
 class AMateria
 {
 	protected:
-		std::string type;
+		const std::string type;
+		MateriaSource* source;
 		const ICharacter* owner;
 	public:
 		virtual ~AMateria();
@@ -22,6 +25,8 @@ class AMateria
 		void leaveOnFloor();
 		AMateria* takeBy(const ICharacter* owner);
 		const ICharacter* getOwner() const;
+		void setOwner(const ICharacter* owner);
+		void setSource(MateriaSource* source);
 		virtual AMateria* clone() const = 0;
 		virtual void use(ICharacter& target);
 };
