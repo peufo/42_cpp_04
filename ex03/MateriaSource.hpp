@@ -4,13 +4,14 @@
 #include <iostream>
 #include "IMateriaSource.hpp"
 
+#define FLOOR_SIZE 100
+
 class MateriaSource: public IMateriaSource
 {
 	private:
 		AMateria *inventory[4];
-		AMateria *floor[100];
+		AMateria *floor[FLOOR_SIZE];
 		void initMaterias();
-		
 	public:
 		~MateriaSource();
 		MateriaSource();
@@ -21,6 +22,7 @@ class MateriaSource: public IMateriaSource
 		AMateria *addMateriaOnFloor(AMateria *src);
 		void	removeMateriaFromFloor(const AMateria *src);
 		bool	isMateriaOnFloor(const AMateria *src);
+		bool	isFloorFull();
 };
 
 #endif

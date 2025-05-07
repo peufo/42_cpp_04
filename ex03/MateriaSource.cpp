@@ -4,7 +4,7 @@ void MateriaSource::initMaterias()
 {
 	for (int i = 0; i < 4; i++)
 		this->inventory[i] = 0;
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < FLOOR_SIZE; i++)
 		this->floor[i] = 0;
 }
 
@@ -13,11 +13,11 @@ AMateria* MateriaSource::addMateriaOnFloor(AMateria* src)
 
 	if (this->isMateriaOnFloor(src))
 		return src;
-
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < FLOOR_SIZE; i++)
 	{
 		if (!this->floor[i])
 		{
+			std::cout << "materia leaved on floor [" << i << "]" << std::endl;
 			this->floor[i] = src;
 			this->floor[i]->setOwner(0);
 			return this->floor[i];
@@ -29,10 +29,11 @@ AMateria* MateriaSource::addMateriaOnFloor(AMateria* src)
 
 void MateriaSource::removeMateriaFromFloor(const AMateria* src)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < FLOOR_SIZE; i++)
 	{
 		if (this->floor[i] && this->floor[i] == src)
 		{
+			std::cout << "Materia taked on floor [" << i << "]" << std::endl;
 			this->floor[i] = 0;
 			return ;
 		}
@@ -41,12 +42,22 @@ void MateriaSource::removeMateriaFromFloor(const AMateria* src)
 
 bool MateriaSource::isMateriaOnFloor(const AMateria* src)
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < FLOOR_SIZE; i++)
 	{
 		if (this->floor[i] == src)
 			return true;
 	}
 	return false;
+}
+
+bool MateriaSource::isFloorFull()
+{
+	for (int i = 0; i < FLOOR_SIZE; i++)
+	{
+		if (!this->floor[i])
+			return false;
+	}
+    return true;
 }
 
 MateriaSource::~MateriaSource()
@@ -59,7 +70,7 @@ MateriaSource::~MateriaSource()
 			this->inventory[i] = 0;
 		}
 	}
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < FLOOR_SIZE; i++)
 	{
 		if (this->floor[i] && !this->floor[i]->getOwner())
 		{
@@ -109,10 +120,16 @@ void MateriaSource::learnMateria(AMateria* materia)
 		}
 	}
 	std::cout << "MateriaSource can't learn more than 4 materia !" << std::endl;
+	delete materia;
 }
 
 AMateria* MateriaSource::createMateria(std::string const& type)
 {
+	if (this->isFloorFull())
+	{
+		std::cout << "Source can't create more materia... Sorry" << std::endl;
+		return 0;
+	}
 	for (int i = 0; i < 4; i++)
 		if (this->inventory[i] && this->inventory[i]->getType() == type)
 			return this->addMateriaOnFloor(this->inventory[i]->clone());

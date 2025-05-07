@@ -84,6 +84,14 @@ void Character::equip(AMateria* materia)
 		return ;
 	for (int i = 0; i < 4; i++)
 	{
+		if (this->slots[i] == materia)
+		{
+			this->say() << "I'm already equiped with this materia... How it's possible ?" << std::endl;
+			return ;
+		}
+	}
+	for (int i = 0; i < 4; i++)
+	{
 		if (!this->slots[i])
 		{
 			this->slots[i] = materia->takeBy(this);
@@ -91,7 +99,7 @@ void Character::equip(AMateria* materia)
 			return ;
 		}
 	}
-	this->say() << "No slot available to equip new materia !" << std::endl;
+	this->say() << "No slot available to equip new materia, I leave it on the floor !" << std::endl;
 	materia->leaveOnFloor();
 }
 
